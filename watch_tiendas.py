@@ -110,7 +110,7 @@ SOLO_SELLADO = True
 # Lo que SÍ interesa: cajas/displays/cases/sobres, premium y colecciones, latas y mini case sets
 SELLADO_RE = re.compile(
     r"booster|box|display|\bcase\b|caja|sobre|collection|colecci|premium|illustration|"
-    r"\btin\b|latas?\b|gift|bundle|set\s*sail|sellad|sealed|precintad",
+    r"\btin\b|latas?\b|gift|bundle|set\s*sail|set\s+especial|special\s+set|sellad|sealed|precintad",
     re.I,
 )
 # Lo que NO interesa: starter decks, double packs y mazos (salvo el Set Sail Deck)
