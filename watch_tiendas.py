@@ -96,7 +96,13 @@ AGOTADO_RE = re.compile(
     re.I,
 )
 PREVENTA_RE = re.compile(r"pre-?venta|pre-?order|precompra|pre-?compra|reserva", re.I)
-PRECIO_RE = re.compile(r"(\d{1,3}(?:\.\d{3})*,\d{2}|\d+,\d{2})\s*€")
+# precios tipo 2.500,00 € / 199,79€ / 24.99 € / € 24,99
+PRECIO_RE = re.compile(
+    r"(\d{1,3}(?:\.\d{3})+,\d{2}|\d+,\d{2}|\d+\.\d{2})\s*€|€\s*(\d{1,3}(?:\.\d{3})+,\d{2}|\d+,\d{2}|\d+\.\d{2})"
+)
+# Pon True para no recibir avisos de versiones en japonés
+EXCLUIR_JAPONES = False
+JAPONES_RE = re.compile(r"japan|japon|\bjp\b|\bjap\b", re.I)
 
 # Filtro de producto sellado (ponlo en False si quieres avisos también de cartas sueltas)
 SOLO_SELLADO = True
@@ -126,7 +132,8 @@ EXCLUIR_CAT_RE = re.compile(
 # Accesorios y merchandising que no interesan aunque lleven "box" o "set" en el nombre
 EXCLUIR_PRODUCTO_RE = re.compile(
     r"playmat|sleeve|funda|protector|storage|deck\s?box|binder|carpeta|album|[áa]lbum|figura|figure|"
-    r"peluche|p[óo]ster|camiseta|llavero|mousepad|alfombrilla|tapete|inscripci|hucha|estandarte",
+    r"peluche|p[óo]ster|camiseta|llavero|mousepad|alfombrilla|tapete|inscripci|hucha|estandarte|"
+    r"blind\s*box|battle\s*record|memories of adventure|presentaci[óo]n|torneo|evento|release event|prerelease",
     re.I,
 )
 # Textos de etiquetas (descuentos, "añadir al carrito"...) que no son el nombre del producto
@@ -168,15 +175,48 @@ def fmt_precio(x):
     return s.replace(",", "X").replace(".", ",").replace("X", ".") + " €"
 
 
+def a_precio(num):
+    return f"{num} €" if "," in num else fmt_precio(num)
+
+
+def a_float(num):
+    return float(num.replace(".", "").replace(",", ".")) if "," in num else float(num)
+
+
 def buscar_precio(card):
     for d in card.select("del, .regular-price, .old-price, s"):  # precios tachados
         d.extract()
     for el in card.select(".price, .product-price, .woocommerce-Price-amount, [itemprop=price]"):
         m = PRECIO_RE.search(el.get_text(" ", strip=True))
         if m:
-            return f"{m.group(1)} €"
-    m = PRECIO_RE.search(card.get_text(" ", strip=True))
-    return f"{m.group(1)} €" if m else None
+            return a_precio(m.group(1) or m.group(2))
+    texto = card.get_text(" ", strip=True)
+    ps = [m.group(1) or m.group(2) for m in PRECIO_RE.finditer(texto)]
+    if not ps:
+        return None
+    if len(ps) > 1 and re.search(r"-\s?\d{1,2}\s?%", texto):  # "221,99€ -10% 199,79€": vale el rebajado
+        return a_precio(min(ps, key=a_float))
+    return a_precio(ps[0])
+
+
+def limpiar_titulo(t):
+    """Quita el precio, el descuento y el estado que algunas webs pegan al nombre. Devuelve (titulo, truncado)."""
+    t = html.unescape(t).replace("&#", "–")
+    t = re.split(r"\s+\d[\d.,]*\s?€", t, maxsplit=1)[0]
+    truncado = ". . ." in t or t.endswith(("...", "…"))
+    t = t.replace(" . . . ", " … ").replace(". . .", "…").strip(" -–")
+    return t, truncado
+
+
+def titulo_completo(url, titulo):
+    """Si el nombre venía cortado, lo lee entero de la página del producto (solo al avisar)."""
+    try:
+        soup = BeautifulSoup(get(url).text, "html.parser")
+        h = soup.select_one("h1.product_title, h1.product-title, h1[itemprop=name], h1")
+        t = h.get_text(" ", strip=True) if h else ""
+        return t if len(t) > 8 else titulo
+    except Exception:
+        return titulo
 
 
 # ---------------------------------------------------------------- lectura de HTML
@@ -202,6 +242,7 @@ def extraer(soup, base, exigir_op=True, token=None):
         if not titulo or BADGE_RE.match(titulo):
             h = card.select_one("h1, h2, h3, h4")
             titulo = h.get_text(" ", strip=True) if h else link
+        titulo, corto = limpiar_titulo(titulo)
         if titulo.endswith(("...", "…")):  # título cortado: usar el nombre que va en la URL
             slug = re.sub(r"\.html?$", "", urlsplit(link).path.rstrip("/").split("/")[-1])
             slug = re.sub(r"^\d+-", "", slug).replace("-", " ").strip()
@@ -223,6 +264,7 @@ def extraer(soup, base, exigir_op=True, token=None):
             "disponible": not AGOTADO_RE.search(marca),
             "precio": buscar_precio(card),
             "carrito": carrito,
+            **({"corto": True} if corto else {}),
         }
     if not out:  # sin tarjetas reconocibles: enlaces sueltos (fuera de menús y pie de página)
         for a in soup.find_all("a", href=True):
@@ -427,7 +469,9 @@ def solo_sellado(items):
     return {
         u: i for u, i in items.items()
         if SELLADO_RE.search(i["titulo"] + " " + u) and not CARTA_RE.search(i["titulo"] + " " + u)
+        and len(i["titulo"].strip()) >= 12  # descarta enlaces de categoría tipo "One Piece"
         and not EXCLUIR_PRODUCTO_RE.search(i["titulo"])
+        and not (EXCLUIR_JAPONES and JAPONES_RE.search(i["titulo"] + " " + u))
         and (not STARTER_RE.search(i["titulo"] + " " + u) or re.search(r"set\s*sail", i["titulo"] + " " + u, re.I))
     }
 
@@ -473,8 +517,10 @@ def patron_repos(marcas):
 def mensaje(d, tipo, url, it, marcas_repos):
     """Aviso en el formato del bot: tipo = 'repo' (reposición) o 'nuevo'."""
     nom, disp = nombre(d), it["disponible"]
+    titulo = titulo_completo(url, it["titulo"]) if it.get("corto") else it["titulo"]
+    it = {**it, "titulo": titulo}
     l = [f"🟢 Hay stock · {nom}" if tipo == "repo" else f"🆕 Nuevo producto · {nom}",
-         f"📦 {it['titulo']}"]
+         f"📦 {titulo}"]
     if it.get("precio"):
         l.append(f"💰 {it['precio']}")
     l += ["", "🛍️ Disponible: ❌ → ✅" if tipo == "repo" else f"🛍️ Disponible: {'✅' if disp else '❌'}", "",
