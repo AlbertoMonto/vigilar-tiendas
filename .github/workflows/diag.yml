@@ -1,0 +1,22 @@
+name: diagnostico
+on:
+  workflow_dispatch:
+    inputs:
+      tiendas:
+        description: "Dominios separados por espacios"
+        required: true
+        default: "arte9.com cartooncorp.net garhis.es"
+
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests beautifulsoup4
+      - run: python watch_tiendas.py --diag $TIENDAS
+        env:
+          TIENDAS: ${{ inputs.tiendas }}
