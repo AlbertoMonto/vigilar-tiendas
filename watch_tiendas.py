@@ -101,8 +101,9 @@ PRECIO_RE = re.compile(
     r"(\d{1,3}(?:\.\d{3})+,\d{2}|\d+,\d{2}|\d+\.\d{2})\s*€|€\s*(\d{1,3}(?:\.\d{3})+,\d{2}|\d+,\d{2}|\d+\.\d{2})"
 )
 # Pon True para no recibir avisos de versiones en japonés
-EXCLUIR_JAPONES = True
+EXCLUIR_JAPONES = False
 JAPONES_RE = re.compile(r"japan|japon|\bjp\b|\bjap\b", re.I)
+DESCUENTO_RE = re.compile(r"-\s?\d{1,2}\s?%\s*(?:" + PRECIO_RE.pattern + ")")
 
 # Filtro de producto sellado (ponlo en False si quieres avisos también de cartas sueltas)
 SOLO_SELLADO = True
@@ -186,37 +187,47 @@ def a_float(num):
 def buscar_precio(card):
     for d in card.select("del, .regular-price, .old-price, s"):  # precios tachados
         d.extract()
+    texto = card.get_text(" ", strip=True)
+    m = DESCUENTO_RE.search(texto)  # "221,99€ -10% 199,79€": vale el que va tras el descuento
+    if m:
+        return a_precio(m.group(1) or m.group(2))
     for el in card.select(".price, .product-price, .woocommerce-Price-amount, [itemprop=price]"):
         m = PRECIO_RE.search(el.get_text(" ", strip=True))
         if m:
             return a_precio(m.group(1) or m.group(2))
-    texto = card.get_text(" ", strip=True)
-    ps = [m.group(1) or m.group(2) for m in PRECIO_RE.finditer(texto)]
-    if not ps:
-        return None
-    if len(ps) > 1 and re.search(r"-\s?\d{1,2}\s?%", texto):  # "221,99€ -10% 199,79€": vale el rebajado
-        return a_precio(min(ps, key=a_float))
-    return a_precio(ps[0])
+    m = PRECIO_RE.search(texto)
+    return a_precio(m.group(1) or m.group(2)) if m else None
 
 
 def limpiar_titulo(t):
-    """Quita el precio, el descuento y el estado que algunas webs pegan al nombre. Devuelve (titulo, truncado)."""
+    """Quita HTML, precio, descuento y estado que algunas webs pegan al nombre. Devuelve (titulo, truncado)."""
     t = html.unescape(t).replace("&#", "–")
+    t = re.sub(r"\s+", " ", re.sub(r"<[^>]*>?", " ", t)).strip()
     t = re.split(r"\s+\d[\d.,]*\s?€", t, maxsplit=1)[0]
-    truncado = ". . ." in t or t.endswith(("...", "…"))
+    truncado = ". . ." in t or "…" in t or t.endswith("...")
     t = t.replace(" . . . ", " … ").replace(". . .", "…").strip(" -–")
     return t, truncado
 
 
-def titulo_completo(url, titulo):
-    """Si el nombre venía cortado, lo lee entero de la página del producto (solo al avisar)."""
+def ficha(url):
+    """Lee la página del producto (solo al avisar): devuelve (titulo_completo, precio); None si no lo encuentra."""
     try:
         soup = BeautifulSoup(get(url).text, "html.parser")
-        h = soup.select_one("h1.product_title, h1.product-title, h1[itemprop=name], h1")
-        t = h.get_text(" ", strip=True) if h else ""
-        return t if len(t) > 8 else titulo
     except Exception:
-        return titulo
+        return None, None
+    h = soup.select_one("h1.product_title, h1.product-title, h1[itemprop=name], h1")
+    titulo = h.get_text(" ", strip=True) if h else None
+    precio = None
+    meta = soup.select_one('meta[property="product:price:amount"], meta[itemprop=price]')
+    if meta and meta.get("content"):
+        precio = fmt_precio(meta["content"])
+    if not precio:
+        for el in soup.select(".price, .product-price, [itemprop=price], .current-price"):
+            m = PRECIO_RE.search(el.get_text(" ", strip=True))
+            if m:
+                precio = a_precio(m.group(1) or m.group(2))
+                break
+    return titulo, precio
 
 
 # ---------------------------------------------------------------- lectura de HTML
@@ -304,24 +315,50 @@ def siguiente_pagina(soup, base, actual):
     return None
 
 
+def candidatas_pagina(url, n):
+    """Direcciones probables de la página n de un listado (/page/n/ de WordPress o ?page=n)."""
+    sp = urlsplit(url)
+    c = []
+    path = re.sub(r"/page/\d+/?$", "/", sp.path)
+    if path.endswith("/"):
+        c.append(sp._replace(path=f"{path}page/{n}/").geturl())
+    q = [x for x in sp.query.split("&") if x and not re.match(r"(page|paged)=", x)]
+    c.append(sp._replace(query="&".join(q + [f"page={n}"])).geturl())
+    return c
+
+
 def paginar(url, exigir_op=True, max_paginas=8):
-    """Lee una página de listado y sigue el enlace 'siguiente'. Devuelve (productos, ultimo_error)."""
+    """Lee un listado y todas sus páginas. Devuelve (productos, ultimo_error)."""
     out, vistas, error = {}, set(), None
+    cands = [url]
     for actual in range(1, max_paginas + 1):
-        if url in vistas:
-            break
-        vistas.add(url)
-        try:
-            r = get(url)
-        except Exception as e:
-            error = e
+        r = None
+        for cu in cands:
+            if cu in vistas:
+                continue
+            vistas.add(cu)
+            try:
+                r = get(cu)
+                break
+            except Exception as e:
+                error = e
+        if r is None:
             break
         soup = BeautifulSoup(r.text, "html.parser")
         m = re.search(r'static_token["\']?\s*[:=]\s*["\']([0-9a-f]{32})', r.text)
+        nuevos = 0
         for k, v in extraer(soup, r.url, exigir_op, m.group(1) if m else None).items():
-            out.setdefault(k, v)
-        url = siguiente_pagina(soup, r.url, actual)
-        if not url:
+            if k not in out:
+                out[k] = v
+                nuevos += 1
+        if actual > 1 and nuevos == 0:  # página repetida o vacía: se acabó
+            break
+        nxt = siguiente_pagina(soup, r.url, actual)
+        if nxt:
+            cands = [nxt]
+        elif nuevos >= 6:  # página llena y sin enlace "siguiente": probar /page/N/ y ?page=N
+            cands = candidatas_pagina(r.url, actual + 1)
+        else:
             break
         time.sleep(0.5)
     return out, error
@@ -517,8 +554,13 @@ def patron_repos(marcas):
 def mensaje(d, tipo, url, it, marcas_repos):
     """Aviso en el formato del bot: tipo = 'repo' (reposición) o 'nuevo'."""
     nom, disp = nombre(d), it["disponible"]
-    titulo = titulo_completo(url, it["titulo"]) if it.get("corto") else it["titulo"]
-    it = {**it, "titulo": titulo}
+    titulo, precio = it["titulo"], it.get("precio")
+    if it.get("corto") or not precio:
+        t2, p2 = ficha(url)
+        if it.get("corto") and t2 and len(t2) > 8:
+            titulo = t2
+        precio = precio or p2
+    it = {**it, "titulo": titulo, "precio": precio}
     l = [f"🟢 Hay stock · {nom}" if tipo == "repo" else f"🆕 Nuevo producto · {nom}",
          f"📦 {titulo}"]
     if it.get("precio"):
