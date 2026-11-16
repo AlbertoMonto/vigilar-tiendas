@@ -101,7 +101,7 @@ PRECIO_RE = re.compile(
     r"(\d{1,3}(?:\.\d{3})+,\d{2}|\d+,\d{2}|\d+\.\d{2})\s*€|€\s*(\d{1,3}(?:\.\d{3})+,\d{2}|\d+,\d{2}|\d+\.\d{2})"
 )
 # Pon True para no recibir avisos de versiones en japonés
-EXCLUIR_JAPONES = False
+EXCLUIR_JAPONES = True
 JAPONES_RE = re.compile(r"japan|japon|\bjp\b|\bjap\b", re.I)
 
 # Filtro de producto sellado (ponlo en False si quieres avisos también de cartas sueltas)
