@@ -100,9 +100,15 @@ PRECIO_RE = re.compile(r"(\d{1,3}(?:\.\d{3})*,\d{2}|\d+,\d{2})\s*€")
 
 # Filtro de producto sellado (ponlo en False si quieres avisos también de cartas sueltas)
 SOLO_SELLADO = True
+# Lo que SÍ interesa: cajas/displays/cases/sobres, premium y colecciones, latas y mini case sets
 SELLADO_RE = re.compile(
-    r"booster|box|display|case|caja|sobre|pack|starter|deck|mazo|baraja|collection|colecci|"
-    r"premium|illustration|\btin\b|lata|bundle|gift|\bset\b|sellad|sealed|precintad",
+    r"booster|box|display|\bcase\b|caja|sobre|collection|colecci|premium|illustration|"
+    r"\btin\b|latas?\b|gift|bundle|set\s*sail|sellad|sealed|precintad",
+    re.I,
+)
+# Lo que NO interesa: starter decks, double packs y mazos (salvo el Set Sail Deck)
+STARTER_RE = re.compile(
+    r"starter|double\s*pack|\bdp[\s\-]?\d{1,2}\b|\bst[\s\-]?\d{1,3}\b|mazo|baraja|\bdeck\b|pack\s+decks?",
     re.I,
 )
 # Código de carta suelta tipo OP05-060 / ST01-012 (los sets sellados son OP-20, ST-44... sin dígitos antes del guion)
@@ -241,10 +247,25 @@ def extraer(soup, base, exigir_op=True, token=None):
     return out
 
 
-def paginar(url, exigir_op=True, max_paginas=5):
+PAG_RE = re.compile(r"(?:/page/|[?&](?:paged|page|pag|p)=)(\d+)", re.I)
+
+
+def siguiente_pagina(soup, base, actual):
+    """URL de la página siguiente del listado (por 'siguiente' o por el enlace a /page/N+1)."""
+    nxt = soup.select_one("a[rel=next], a.next, li.next a, .pagination .next a")
+    if nxt and nxt.get("href"):
+        return urljoin(base, nxt["href"])
+    for a in soup.find_all("a", href=True):
+        m = PAG_RE.search(a["href"])
+        if m and int(m.group(1)) == actual + 1:
+            return urljoin(base, a["href"])
+    return None
+
+
+def paginar(url, exigir_op=True, max_paginas=8):
     """Lee una página de listado y sigue el enlace 'siguiente'. Devuelve (productos, ultimo_error)."""
     out, vistas, error = {}, set(), None
-    for _ in range(max_paginas):
+    for actual in range(1, max_paginas + 1):
         if url in vistas:
             break
         vistas.add(url)
@@ -257,10 +278,9 @@ def paginar(url, exigir_op=True, max_paginas=5):
         m = re.search(r'static_token["\']?\s*[:=]\s*["\']([0-9a-f]{32})', r.text)
         for k, v in extraer(soup, r.url, exigir_op, m.group(1) if m else None).items():
             out.setdefault(k, v)
-        nxt = soup.select_one("a[rel=next], a.next, li.next a, .pagination .next a")
-        if not nxt or not nxt.get("href"):
+        url = siguiente_pagina(soup, r.url, actual)
+        if not url:
             break
-        url = urljoin(r.url, nxt["href"])
         time.sleep(0.5)
     return out, error
 
@@ -408,6 +428,7 @@ def solo_sellado(items):
         u: i for u, i in items.items()
         if SELLADO_RE.search(i["titulo"] + " " + u) and not CARTA_RE.search(i["titulo"] + " " + u)
         and not EXCLUIR_PRODUCTO_RE.search(i["titulo"])
+        and (not STARTER_RE.search(i["titulo"] + " " + u) or re.search(r"set\s*sail", i["titulo"] + " " + u, re.I))
     }
 
 
