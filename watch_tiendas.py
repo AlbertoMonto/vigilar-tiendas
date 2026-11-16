@@ -151,9 +151,20 @@ CARD_SEL = ("li.product, article.product, article.product-miniature, li.ajax_blo
 
 
 def get(url, **kw):
-    r = S.get(url, timeout=TIMEOUT, **kw)
-    r.raise_for_status()
-    return r
+    """GET con 3 intentos: reintenta si la web corta la conexión, tarda mucho o responde 429/5xx."""
+    ultimo = None
+    for intento in range(3):
+        try:
+            r = S.get(url, timeout=TIMEOUT, **kw)
+            if r.status_code in (429, 500, 502, 503, 504) and intento < 2:
+                time.sleep(3 * (intento + 1))
+                continue
+            r.raise_for_status()
+            return r
+        except (requests.ConnectionError, requests.Timeout) as e:
+            ultimo = e
+            time.sleep(3 * (intento + 1))
+    raise ultimo
 
 
 def clean(url):
