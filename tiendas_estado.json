@@ -2064,6 +2064,12 @@
     "disponible": false,
     "precio": "7,00 €",
     "carrito": "https://sarumangames.es/cart/add?id=53555879707003&quantity=1"
+   },
+   "https://sarumangames.es/products/one-piece-tcg-mini-tin-case-set-display-ts-03": {
+    "titulo": "One Piece TCG Mini Tin Case Set - Display (TS-03) - Caja sellada",
+    "disponible": false,
+    "precio": "250,00 €",
+    "carrito": "https://sarumangames.es/cart/add?id=56593990812027&quantity=1"
    }
   },
   "kabenzots.com": {
@@ -2484,10 +2490,16 @@
     "carrito": "https://flashstore.es/producto/one-piece-heroines-special-set/?add-to-cart=145214"
    },
    "https://flashstore.es/producto/one-piece-premium-collection-live-action-vol-2/": {
-    "titulo": "One Piece Premium collection Live Action Vol.2",
+    "titulo": "One Piece Premium collection Live Action Vol.2 Straw Hat Crew",
     "disponible": true,
     "precio": "28,90 €",
     "carrito": "https://flashstore.es/producto/one-piece-premium-collection-live-action-vol-2/?add-to-cart=145666"
+   },
+   "https://flashstore.es/producto/one-piece-premium-collection-live-action-vol-2-baroque-works/": {
+    "titulo": "One Piece Premium collection Live Action Vol.2 Baroque Works",
+    "disponible": true,
+    "precio": "29,90 €",
+    "carrito": "https://flashstore.es/producto/one-piece-premium-collection-live-action-vol-2-baroque-works/?add-to-cart=145755"
    }
   },
   "arte9.com": {
@@ -2986,7 +2998,7 @@
   "zialtcg.com": {
    "https://www.zialtcg.com/producto/the-dominance-of-god-op18-boosters-box-one-piece-card-game/": {
     "titulo": "The Dominance of God OP18 Boosters Box – One Piece Card Game",
-    "disponible": true,
+    "disponible": false,
     "precio": "149,95 €",
     "carrito": "https://www.zialtcg.com/producto/the-dominance-of-god-op18-boosters-box-one-piece-card-game/?add-to-cart=11469"
    },
@@ -3104,7 +3116,7 @@
     "titulo": "Model Kit: One Piece – Grand Ship Collection – Marine Ship",
     "disponible": true,
     "precio": "20,95 €",
-    "carrito": "https://www.empiregames.es/page/3?s=one+piece&post_type=product&add-to-cart=231216"
+    "carrito": "https://www.empiregames.es/page/2?s=one+piece&post_type=product&add-to-cart=231216"
    },
    "https://www.empiregames.es/producto/world-of-warcraft-mug-460-ml-horde-box-x2-27": {
     "titulo": "ONE PIECE – Mug – 320 ml – Wano Chopper",
@@ -4382,10 +4394,11 @@
     "carrito": "https://dungeonmarvels.com/index.php?controller=cart&add=1&id_product=101963&id_product_attribute=0&token=9afc6a58abbe5745d2504cbd4251943d"
    },
    "https://dungeonmarvels.com/one-piece-tcg-heroines-edition-vol2-booster-display-24-103693.html": {
-    "titulo": "One Piece TCG: Heroines Edition Vol.2 Booster Display (24)",
+    "titulo": "one piece tcg heroines edition vol2 booster display 24 103693",
     "disponible": true,
     "precio": "299,00 €",
-    "carrito": "https://dungeonmarvels.com/index.php?controller=cart&add=1&id_product=103693&id_product_attribute=0&token=9afc6a58abbe5745d2504cbd4251943d"
+    "carrito": "https://dungeonmarvels.com/index.php?controller=cart&add=1&id_product=103693&id_product_attribute=0&token=9afc6a58abbe5745d2504cbd4251943d",
+    "corto": true
    },
    "https://dungeonmarvels.com/one-piece-card-game-mini-case-set-vol3-ts-03-lata-roja-luffy-dorada-103876.html": {
     "titulo": "one piece card game mini case set vol3 ts 03 lata roja luffy dorada 103876",
@@ -5670,6 +5683,12 @@
     "disponible": false,
     "precio": "200,00 €",
     "carrito": "https://latiendascum.com/index.php?controller=cart&add=1&id_product=11705&id_product_attribute=0&token=d68b4c12a12223a508430820b388bd6b"
+   },
+   "https://latiendascum.com/one-piece-tcg/11266-op18-display-9981804513693.html": {
+    "titulo": "OP18 Display",
+    "disponible": false,
+    "precio": "144,00 €",
+    "carrito": "https://latiendascum.com/index.php?controller=cart&add=1&id_product=11266&id_product_attribute=0&token=d68b4c12a12223a508430820b388bd6b"
    }
   },
   "quinto-elemento.es": {
@@ -6039,7 +6058,7 @@
   "somniacrevillent.com": {
    "https://somniacrevillent.com/producto/kled-one-piece-op-19-caja-24-sobres/": {
     "titulo": "(KLED) One Piece [OP-19] Caja 24 sobres",
-    "disponible": true,
+    "disponible": false,
     "precio": "139,95 €",
     "carrito": "https://somniacrevillent.com/producto/kled-one-piece-op-19-caja-24-sobres/?add-to-cart=11184"
    },
@@ -6136,7 +6155,7 @@
   "sarumangames.es": 0,
   "kabenzots.com": 0,
   "flashstore.es": 0,
-  "arte9.com": 1,
+  "arte9.com": 0,
   "pocketpiecetcg.com": 0,
   "zialtcg.com": 0,
   "empiregames.es": 0,
@@ -6148,7 +6167,7 @@
   "geeklogia.shop": 0,
   "comicstores.es": 0,
   "hobbyshopwargames.es": 0,
-  "tcgfusion.com": 15,
+  "tcgfusion.com": 16,
   "homelands.es": 0,
   "vicoltcg.com": 0,
   "kurogami.com": 0,
@@ -6156,19 +6175,19 @@
   "dungeonmarvels.com": 0,
   "masterofgames.es": 0,
   "dashu.es": 0,
-  "cartooncorp.net": 15,
+  "cartooncorp.net": 16,
   "minasdemoria.com": 0,
   "padis-store.com": 0,
   "latiendascum.com": 0,
   "quinto-elemento.es": 0,
-  "garhis.es": 15,
+  "garhis.es": 16,
   "miceliongames.com": 0,
   "frikinexo.com": 0,
-  "collectorage.com": 15,
+  "collectorage.com": 16,
   "topdeck.es": 0,
-  "frikibunker.es": 15,
-  "only-cards.com": 7,
-  "herofreaks.com": 15
+  "frikibunker.es": 16,
+  "only-cards.com": 8,
+  "herofreaks.com": 16
  },
  "repos": {
   "zialtcg.com": [
