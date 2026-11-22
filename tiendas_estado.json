@@ -1588,6 +1588,12 @@
     "disponible": false,
     "precio": "6,00 €",
     "carrito": "https://factorycardstcg.com/cart/add?id=57585447141641&quantity=1"
+   },
+   "https://factorycardstcg.com/products/one-piece-op18-the-dominance-of-god-booster-box": {
+    "titulo": "ONE PIECE - OP18 The Dominance Of God Booster Box",
+    "disponible": true,
+    "precio": "135,00 €",
+    "carrito": "https://factorycardstcg.com/cart/add?id=57557972091145&quantity=1"
    }
   },
   "darkritualtcg.es": {
@@ -3895,6 +3901,18 @@
     "disponible": true,
     "precio": "160,00 €",
     "carrito": "https://www.homelands.es/producto/one-piece-heroines-special-set/?add-to-cart=53092"
+   },
+   "https://www.homelands.es/producto/one-piece-bandai-premium-premium-card-collection-live-action-edition-vol-2-baroque-works/": {
+    "titulo": "One Piece – Bandai Premium – Premium Card Collection -Live Action Edition vol.2 Baroque Works-",
+    "disponible": true,
+    "precio": "30,00 €",
+    "carrito": "https://www.homelands.es/producto/one-piece-bandai-premium-premium-card-collection-live-action-edition-vol-2-baroque-works/?add-to-cart=55436"
+   },
+   "https://www.homelands.es/producto/one-piece-bandai-premium-premium-card-collection-live-action-edition-vol-2-straw-hat-crew/": {
+    "titulo": "One Piece – Bandai Premium – Premium Card Collection -Live Action Edition vol.2 Straw Hat Crew-",
+    "disponible": true,
+    "precio": "30,00 €",
+    "carrito": "https://www.homelands.es/producto/one-piece-bandai-premium-premium-card-collection-live-action-edition-vol-2-straw-hat-crew/?add-to-cart=55430"
    }
   },
   "vicoltcg.com": {
@@ -3931,13 +3949,13 @@
    "https://vicoltcg.com/product/premium-card-collection-live-action-edition-vol-2-baroque-works-one-piece-card-game/": {
     "titulo": "Premium Card Collection Live Action Edition Vol.2 – Baroque Works – One Piece Card Game",
     "disponible": true,
-    "precio": "42,90 €",
+    "precio": "29,90 €",
     "carrito": "https://vicoltcg.com/product/premium-card-collection-live-action-edition-vol-2-baroque-works-one-piece-card-game/?add-to-cart=26475"
    },
    "https://vicoltcg.com/product/premium-card-collection-live-action-edition-vol-2-straw-hat-crew-one-piece-card-game/": {
     "titulo": "Premium Card Collection Live Action Edition Vol.2 – Straw Hat Crew – One Piece Card Game",
     "disponible": true,
-    "precio": "45,90 €",
+    "precio": "29,00 €",
     "carrito": "https://vicoltcg.com/product/premium-card-collection-live-action-edition-vol-2-straw-hat-crew-one-piece-card-game/?add-to-cart=26470"
    }
   },
@@ -5227,7 +5245,7 @@
    "https://minasdemoria.com/juegos-de-cartas-coleccionables/16429-op-one-piece-card-game-booster-display-op-18-24-packs-en.html": {
     "titulo": "OP - One Piece Card Game Booster Display OP-18 (24 Packs) - EN",
     "disponible": true,
-    "precio": "170,00 €",
+    "precio": "160,00 €",
     "carrito": "https://minasdemoria.com/index.php?controller=cart&add=1&id_product=16429&id_product_attribute=0&token=1072b5d12e4583c96c2c8c50771da2ce"
    }
   },
@@ -6167,7 +6185,7 @@
   "geeklogia.shop": 0,
   "comicstores.es": 0,
   "hobbyshopwargames.es": 0,
-  "tcgfusion.com": 16,
+  "tcgfusion.com": 17,
   "homelands.es": 0,
   "vicoltcg.com": 0,
   "kurogami.com": 0,
@@ -6175,19 +6193,19 @@
   "dungeonmarvels.com": 0,
   "masterofgames.es": 0,
   "dashu.es": 0,
-  "cartooncorp.net": 16,
+  "cartooncorp.net": 17,
   "minasdemoria.com": 0,
   "padis-store.com": 0,
   "latiendascum.com": 0,
   "quinto-elemento.es": 0,
-  "garhis.es": 16,
+  "garhis.es": 17,
   "miceliongames.com": 0,
   "frikinexo.com": 0,
-  "collectorage.com": 16,
+  "collectorage.com": 17,
   "topdeck.es": 0,
-  "frikibunker.es": 16,
-  "only-cards.com": 8,
-  "herofreaks.com": 16
+  "frikibunker.es": 17,
+  "only-cards.com": 9,
+  "herofreaks.com": 17
  },
  "repos": {
   "zialtcg.com": [
