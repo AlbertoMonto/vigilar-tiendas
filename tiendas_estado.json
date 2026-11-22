@@ -1592,7 +1592,7 @@
    "https://factorycardstcg.com/products/one-piece-op18-the-dominance-of-god-booster-box": {
     "titulo": "ONE PIECE - OP18 The Dominance Of God Booster Box",
     "disponible": true,
-    "precio": "145,00 €",
+    "precio": "135,00 €",
     "carrito": "https://factorycardstcg.com/cart/add?id=57557972091145&quantity=1"
    }
   },
@@ -2510,7 +2510,7 @@
   },
   "arte9.com": {
    "https://arte9.com/producto/caja-big-three-themes-one-piece-card-game-op-18/": {
-    "titulo": "PREVENTA – CAJA THE DOMI … One Piece CCG - OP 18",
+    "titulo": "CAJA THE DOMINANCE OF GOD R … One Piece CCG - OP 18",
     "disponible": true,
     "precio": "199,79 €",
     "carrito": "https://arte9.com/?add-to-cart=121135",
@@ -3004,7 +3004,7 @@
   "zialtcg.com": {
    "https://www.zialtcg.com/producto/the-dominance-of-god-op18-boosters-box-one-piece-card-game/": {
     "titulo": "The Dominance of God OP18 Boosters Box – One Piece Card Game",
-    "disponible": false,
+    "disponible": true,
     "precio": "149,95 €",
     "carrito": "https://www.zialtcg.com/producto/the-dominance-of-god-op18-boosters-box-one-piece-card-game/?add-to-cart=11469"
    },
@@ -3049,6 +3049,18 @@
     "disponible": true,
     "precio": "5,95 €",
     "carrito": "https://www.zialtcg.com/producto/sobre-the-dominance-of-god-op18-one-piece-card-game/?add-to-cart=11654"
+   },
+   "https://www.zialtcg.com/producto/premium-card-collection-live-action-edition-vol-2-straw-hat-crew-one-piece-card-game/": {
+    "titulo": "Premium Card Collection Live Action Edition vol.2 Straw Hat Crew – One Piece Card Game",
+    "disponible": true,
+    "precio": "29,95 €",
+    "carrito": "https://www.zialtcg.com/producto/premium-card-collection-live-action-edition-vol-2-straw-hat-crew-one-piece-card-game/?add-to-cart=11722"
+   },
+   "https://www.zialtcg.com/producto/premium-card-collection-live-action-edition-vol-2-baroque-works-one-piece-card-game/": {
+    "titulo": "Premium Card Collection Live Action Edition vol.2 Baroque Works – One Piece Card Game",
+    "disponible": true,
+    "precio": "29,95 €",
+    "carrito": "https://www.zialtcg.com/producto/premium-card-collection-live-action-edition-vol-2-baroque-works-one-piece-card-game/?add-to-cart=11710"
    }
   },
   "empiregames.es": {
@@ -3982,7 +3994,7 @@
    },
    "https://lacuevaroja.com/one-piece-card-game/opcg-case-booster-box-peb01-en": {
     "titulo": "opcg case booster box peb01 en",
-    "disponible": false,
+    "disponible": true,
     "precio": "2.500,00 €",
     "carrito": "https://lacuevaroja.com/index.php?controller=cart&add=1&id_product=182783&id_product_attribute=0&token=1c0665ab27c4f5868a38ec78453ac8bc",
     "corto": true
@@ -4100,11 +4112,10 @@
     "corto": true
    },
    "https://lacuevaroja.com/one-piece-card-game/opcg-case-booster-box-eb03-en-preventa-": {
-    "titulo": "opcg case booster box eb03 en preventa",
-    "disponible": false,
-    "precio": "1.000,00 €",
-    "carrito": "https://lacuevaroja.com/index.php?controller=cart&add=1&id_product=171958&id_product_attribute=0&token=1c0665ab27c4f5868a38ec78453ac8bc",
-    "corto": true
+    "titulo": "OPCG: Case Booster Box EB03 EN",
+    "disponible": true,
+    "precio": "2.800,00 €",
+    "carrito": "https://lacuevaroja.com/index.php?controller=cart&add=1&id_product=171958&id_product_attribute=0&token=1c0665ab27c4f5868a38ec78453ac8bc"
    },
    "https://lacuevaroja.com/one-piece-card-game/opcg-case-booster-box-eb02-en": {
     "titulo": "OPCG: Case Booster Box EB02 EN",
@@ -5250,31 +5261,31 @@
    },
    "https://minasdemoria.com/juegos-de-cartas-coleccionables/16565-op---one-piece-card-game-op-15-eb-04-booster---en.html": {
     "titulo": "OP - One Piece Card Game OP-15 EB-04 Booster - EN",
-    "disponible": false,
+    "disponible": true,
     "precio": "8,00 €",
     "carrito": "https://minasdemoria.com/index.php?controller=cart&add=1&id_product=16565&id_product_attribute=0&token=1072b5d12e4583c96c2c8c50771da2ce"
    },
    "https://minasdemoria.com/juegos-de-cartas-coleccionables/16564-op---one-piece-card-game-op-16-booster---en.html": {
     "titulo": "OP - One Piece Card Game OP-16 Booster - EN",
-    "disponible": false,
+    "disponible": true,
     "precio": "8,00 €",
     "carrito": "https://minasdemoria.com/index.php?controller=cart&add=1&id_product=16564&id_product_attribute=0&token=1072b5d12e4583c96c2c8c50771da2ce"
    },
    "https://minasdemoria.com/juegos-de-cartas-coleccionables/16563-op---one-piece-card-game-op-17-booster---en.html": {
     "titulo": "OP - One Piece Card Game OP-17 Booster - EN",
-    "disponible": false,
+    "disponible": true,
     "precio": "10,00 €",
     "carrito": "https://minasdemoria.com/index.php?controller=cart&add=1&id_product=16563&id_product_attribute=0&token=1072b5d12e4583c96c2c8c50771da2ce"
    },
    "https://minasdemoria.com/juegos-de-cartas-coleccionables/16562-op---one-piece-card-game-eb-05-booster---en.html": {
     "titulo": "OP - One Piece Card Game EB-05 Booster - EN",
-    "disponible": false,
+    "disponible": true,
     "precio": "8,00 €",
     "carrito": "https://minasdemoria.com/index.php?controller=cart&add=1&id_product=16562&id_product_attribute=0&token=1072b5d12e4583c96c2c8c50771da2ce"
    },
    "https://minasdemoria.com/juegos-de-cartas-coleccionables/16430-op---one-piece-card-game-booster-op-18---en.html": {
     "titulo": "OP - One Piece Card Game Booster OP-18 - EN",
-    "disponible": false,
+    "disponible": true,
     "precio": "8,00 €",
     "carrito": "https://minasdemoria.com/index.php?controller=cart&add=1&id_product=16430&id_product_attribute=0&token=1072b5d12e4583c96c2c8c50771da2ce"
    }
@@ -6215,39 +6226,45 @@
   "geeklogia.shop": 0,
   "comicstores.es": 0,
   "hobbyshopwargames.es": 0,
-  "tcgfusion.com": 18,
-  "homelands.es": 1,
+  "tcgfusion.com": 19,
+  "homelands.es": 0,
   "vicoltcg.com": 0,
   "kurogami.com": 0,
   "lacuevaroja.com": 0,
   "dungeonmarvels.com": 0,
   "masterofgames.es": 0,
   "dashu.es": 0,
-  "cartooncorp.net": 18,
+  "cartooncorp.net": 19,
   "minasdemoria.com": 0,
   "padis-store.com": 0,
   "latiendascum.com": 0,
   "quinto-elemento.es": 0,
-  "garhis.es": 18,
+  "garhis.es": 19,
   "miceliongames.com": 0,
   "frikinexo.com": 0,
-  "collectorage.com": 18,
+  "collectorage.com": 19,
   "topdeck.es": 0,
-  "frikibunker.es": 18,
-  "only-cards.com": 10,
-  "herofreaks.com": 18
+  "frikibunker.es": 19,
+  "only-cards.com": 11,
+  "herofreaks.com": 19
  },
  "repos": {
   "zialtcg.com": [
    "2026-11-17T14:31",
    "2026-11-19T10:52",
-   "2026-11-20T23:55"
+   "2026-11-20T23:55",
+   "2026-11-22T16:21"
   ],
   "minasdemoria.com": [
    "2026-11-17T14:31",
    "2026-11-17T14:31",
    "2026-11-17T14:31",
-   "2026-11-20T17:53"
+   "2026-11-20T17:53",
+   "2026-11-22T16:21",
+   "2026-11-22T16:21",
+   "2026-11-22T16:21",
+   "2026-11-22T16:21",
+   "2026-11-22T16:21"
   ],
   "arte9.com": [
    "2026-11-18T21:19",
@@ -6285,6 +6302,10 @@
   "montalfan.com": [
    "2026-11-21T15:00",
    "2026-11-21T15:00"
+  ],
+  "lacuevaroja.com": [
+   "2026-11-22T16:21",
+   "2026-11-22T16:21"
   ]
  }
 }
